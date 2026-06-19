@@ -130,7 +130,9 @@ transform:translateY(-100px);
 <body>
 
 <!-- Hidden Music -->
-<audio id="player"></audio>
+<audio id="player" autoplay preload="auto">
+    <source src="music1.mp3" type="audio/mpeg">
+</audio>
 
 <section class="hero">
 
@@ -215,36 +217,24 @@ Made with ❤️ by Kevin
 
 <script>
 
-const songs=[
-"music1.mp3",
-"music2.mp3"
+const songs = [
+    "music1.mp3",
+    "music2.mp3"
 ];
 
-let currentSong=0;
+let currentSong = 0;
+const player = document.getElementById("player");
 
-const player=document.getElementById("player");
+window.onload = function() {
+    player.play().catch(() => {
+        console.log("Autoplay blocked");
+    });
+};
 
-function startBirthday(){
-
-document.getElementById("letter").style.display="block";
-
-document.getElementById("letter").scrollIntoView({
-behavior:"smooth"
-});
-
-player.src=songs[currentSong];
-player.play();
-
-}
-
-player.addEventListener("ended",()=>{
-
-currentSong=(currentSong+1)%songs.length;
-
-player.src=songs[currentSong];
-
-player.play();
-
+player.addEventListener("ended", function() {
+    currentSong = (currentSong + 1) % songs.length;
+    player.src = songs[currentSong];
+    player.play().catch(() => {});
 });
 
 function createHeart(){
